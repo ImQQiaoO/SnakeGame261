@@ -1,0 +1,5 @@
+# ignore
+.idea/
+out
+*.iml
+src/Score.txt
