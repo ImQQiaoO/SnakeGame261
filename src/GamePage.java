@@ -197,7 +197,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         if (isWin) {
             g.setColor(new Color(181, 163, 20));
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            //TODO: Functions not implemented
             g.drawString("You win! Press SPACE to restart.", 150, 300);
         }
         if (dizzy && dizzyTime != 3) {
@@ -212,33 +211,34 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
         //draw the rest heart
         int gap = 0;
+        int maxHeart = 3;
         if (gameMode) {
-            for (int i = 0; i < heart; i++) {
+            for (int i = 0; i < maxHeart; i++) {
                 gap++;
-                Data.heart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
-            }
-            int damage = 3 - heart;
-            for (int i = 0; i < damage; i++) {
-                Data.emptyHeart.paintIcon(this, g, 625 + (heart + i) * 30 + (heart + i + 1) * 7, 30);
+                if (i < heart) {
+                    Data.heart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
+                }
             }
         } else { //Double Mode
-            for (int i = 0; i < heart; i++) {
+            for (int i = 0; i < maxHeart; i++) {
                 gap++;
-                Data.heart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
+                if (i < heart) {
+                    Data.heart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
+                }
             }
-            int damage = 3 - heart;
-            for (int i = 0; i < damage; i++) {
-                Data.emptyHeart.paintIcon(this, g, 300 + (heart + i) * 30 + (heart + i + 1) * 7, 20);
-            }
+
             gap = 0;
-            for (int i = 0; i < anotherSnake.heart; i++) {
+            for (int i = 0; i < maxHeart; i++) {
                 gap++;
-                Data.heart1.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
-            }
-            damage = 3 - anotherSnake.heart;
-            for (int i = 0; i < damage; i++) {
-                Data.emptyHeart.paintIcon(this, g,
-                        650 + (anotherSnake.heart + i) * 30 + (anotherSnake.heart + i + 1) * 7, 20);
+                if (i < anotherSnake.heart) {
+                    Data.heart1.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
+                }
             }
         }
     }
@@ -332,7 +332,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
             if (snakeList.get(0) == foodX && snakeList.get(1) == foodY) {
                 length++;
-                if (length == 20 && border) { //todo 长度控制输赢
+                if (length == 20 && border) { // if the length of the snake is 20, you win
                     timer.stop();
                     isWin = true;
                 }

@@ -155,6 +155,7 @@ public class Menu extends JPanel implements KeyListener {
         } else if (e.getKeyChar() == '3') {
             modeChooser(false, false);
         }
+        //Add new features here: Ranking List, etc.
     }
     public void modeChooser(boolean gameMode, boolean border) {
         JFrame gameFrame = new JFrame("Snake");

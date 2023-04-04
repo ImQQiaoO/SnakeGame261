@@ -17,8 +17,8 @@ public class Snake {
 
     public void init() {
         snakeList.clear();
-        if (!GamePage.gameMode) {                 //100, 100, 75, 100, 50, 100
-            Collections.addAll(snakeList, 100, 150, 75, 150, 50, 150);//125, 100, 150, 100, 175, 100
+        if (!GamePage.gameMode) {
+            Collections.addAll(snakeList, 100, 150, 75, 150, 50, 150);
         }
         score = 0;
         length = 3;
