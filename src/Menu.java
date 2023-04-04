@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Menu extends JPanel implements KeyListener {
 
     JFrame frame = new JFrame();
-    public static String highestScore = "-";
+//    public static String highestScore = "-";
 
     Color black = Color.BLACK;
     Color red = Color.RED;
@@ -98,7 +98,7 @@ public class Menu extends JPanel implements KeyListener {
 
 
     public Menu() {
-        setupWindow(500, 500);
+        setupWindow(500, 550);
 
         //检查是否有Score.txt文件，如果没有则创建，用来记录最高分
         boolean isScoreFileExist = false;
@@ -122,9 +122,10 @@ public class Menu extends JPanel implements KeyListener {
 
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         changeBackgroundColor(g, new Color(102, 186, 101));
-        clearBackground(g, 500, 500);
+        clearBackground(g, 500, 600);
         changeColor(g, blue);
         drawText(g, 100, 100, "Welcome to Snake!", 30);
         changeColor(g, black);
@@ -132,15 +133,18 @@ public class Menu extends JPanel implements KeyListener {
         drawText(g, 120, 250, "- 1. Single Player (Quick start)", 20);
         drawText(g, 120, 300, "- 2. Single Player (Infinite Mode)", 20);
         drawText(g, 120, 350, "- 3. Multi Player", 20);
+        drawText(g, 120, 400, "- 4. Rank List", 20);
         changeColor(g, blue);
+        String highestScore;
         try {
             FileReader fd = new FileReader("./src/Score.txt");
             BufferedReader br = new BufferedReader(fd);
-            highestScore = br.readLine();
+            String highestScoreLine = br.readLine();
+            highestScore = highestScoreLine.substring(highestScoreLine.indexOf("=") + 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        drawText(g, 120, 400, "Highest Score: " + highestScore, 30);
+        drawText(g, 100, 470, "Highest Score: " + highestScore, 30);
 
         Data.label.paintIcon(this, g, 210, 170);
     }
@@ -154,9 +158,51 @@ public class Menu extends JPanel implements KeyListener {
             modeChooser(true, false);
         } else if (e.getKeyChar() == '3') {
             modeChooser(false, false);
+        } else if (e.getKeyChar() == '4') {  //Show rank List Here:
+            class RankList extends JPanel {
+                public RankList() {
+                    JFrame rankListFrame = new JFrame("Ranking list");
+                    rankListFrame.setBounds(100, 100, 350, 500);
+                    rankListFrame.setResizable(false);
+                    rankListFrame.setVisible(true); //Show the window
+                    rankListFrame.setLayout(new BoxLayout(rankListFrame.getContentPane(), BoxLayout.LINE_AXIS));
+                    rankListFrame.add(this);
+                }
+
+                @Override
+                public void paintComponent(Graphics g) {
+                    changeBackgroundColor(g, new Color(102, 186, 101));
+                    clearBackground(g, 500, 500);
+                    drawText(g, 40, 40, "Ranking List (Infinite Mode)", 20);
+                    //读取src/Score.txt文件
+                    try {
+                        FileReader fd = new FileReader("./src/Score.txt");
+                        BufferedReader br = new BufferedReader(fd);
+                        String line;
+                        int i = 0;
+                        while ((line = br.readLine()) != null) {
+                            i++;
+                            String[] score = line.split("=");
+                            if (i == 1) {
+                                changeColor(g, new Color(255, 215, 0));
+                            } else if (i == 2) {
+                                changeColor(g, new Color(192, 192, 192));
+                            } else if (i == 3) {
+                                changeColor(g, new Color(205, 127, 50));
+                            } else {
+                                changeColor(g, black);
+                            }
+                            drawText(g, 30, 80 + i * 30, i + ". " + score[0] + "---" + score[1], 20);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            new RankList();
         }
-        //Add new features here: Ranking List, etc.
     }
+
     public void modeChooser(boolean gameMode, boolean border) {
         JFrame gameFrame = new JFrame("Snake");
         gameFrame.setBounds(10, 10, 900, 720);

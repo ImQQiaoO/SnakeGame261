@@ -1,3 +1,4 @@
+import javax.swing.Timer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,13 +6,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
 
 //游戏的面板
 public class GamePage extends JPanel implements KeyListener, ActionListener {
@@ -49,7 +52,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         GamePage.gameMode = gameMode;       //set game mode, true: single mode, false: double mode.
         if (!gameMode) {
             anotherSnake = new Snake();
-            System.out.println(anotherSnake);
         } else anotherSnake = null;
         init();//初始化
         this.setFocusable(true); //获取焦点事件
@@ -189,10 +191,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
             g.drawString("You Dead, Press SPACE to restart!", 200, 300);
             direction = "R";
-            //读取最高分
-            if (gameMode) { //单人模式才会写入最高分
-                getNewHighestScore();
-            }
         }
         if (isWin) {
             g.setColor(new Color(181, 163, 20));
@@ -243,18 +241,40 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    public void getNewHighestScore() {
-        try {
-            FileReader fd = new FileReader("./src/Score.txt");
-            BufferedReader br = new BufferedReader(fd);
-            int score = Integer.parseInt(br.readLine());
-            if (GamePage.score > score) {
-                FileWriter fw = new FileWriter("./src/Score.txt");
-                fw.write(String.valueOf(GamePage.score));
-                fw.close();
+    public void getNewHighestScore() {          //TODO: 写入游戏得分
+        // 写入当前时间和得分，追加至文件末尾
+        Date day = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(day);
+//        System.out.println(sdf.format(day));
+        String fileName = "./src/Score.txt";
+        Path path = Paths.get(fileName);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            bufferedWriter.write(date + "=" + GamePage.score + "\n");
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        //读取文件中所有的内容，将其存入一个TreeMap中
+        TreeMap<String, Integer> highestScoreMap = new TreeMap<>();
+        try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] arr = line.split("=");
+                highestScoreMap.put(arr[0], Integer.valueOf(arr[1]));
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        //将TreeMap中的内容依据value值进行排序
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(highestScoreMap.entrySet());
+        list.sort((o1, o2) -> o2.getValue() - o1.getValue());
+        //将排序后的内容写入文件中,只保留前十条
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            for (int i = 0; i < list.size() && i < 10; i++) {
+                bufferedWriter.write(list.get(i).getKey() + "=" + list.get(i).getValue() + "\n");
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -461,6 +481,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                     heart = heart - 1;
                     if (heart == 0) {
                         isFail = true;
+                        //读取最高分
+                        if (gameMode && !border) { //单人模式无边界才会记录最高分
+                            getNewHighestScore();
+                        }
                     }
                     break;
                 }
