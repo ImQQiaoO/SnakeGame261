@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
@@ -241,19 +240,13 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    public void getNewHighestScore() {          //TODO: 写入游戏得分
-        // 写入当前时间和得分，追加至文件末尾
+    public void getNewHighestScore() {
+        // 写入当前时间和得分，追加至文件末尾    写入游戏得分
         Date day = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sdf.format(day);
-//        System.out.println(sdf.format(day));
         String fileName = "./src/Score.txt";
         Path path = Paths.get(fileName);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(date + "=" + GamePage.score + "\n");
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
         //读取文件中所有的内容，将其存入一个TreeMap中
         TreeMap<String, Integer> highestScoreMap = new TreeMap<>();
         try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
@@ -265,6 +258,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        highestScoreMap.put(date, GamePage.score);
         //将TreeMap中的内容依据value值进行排序
         List<Map.Entry<String, Integer>> list = new ArrayList<>(highestScoreMap.entrySet());
         list.sort((o1, o2) -> o2.getValue() - o1.getValue());
