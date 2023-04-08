@@ -70,9 +70,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         timer.start();
         snakeList.clear();
         Collections.addAll(snakeList, 100, 100, 75, 100, 50, 100);//init snakeList
-        int[] foodPositionArray = randomMaker();
-        foodX = foodPositionArray[0];
-        foodY = foodPositionArray[1];
         goldenFoodX.clear();
         goldenFoodY.clear();
         poisonFoodX.clear(); //init poisonFood
@@ -86,6 +83,9 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         if (!gameMode) {        //双人模式：初始化另一条蛇
             anotherSnake.init();
         }
+        int[] foodPositionArray = randomMaker();
+        foodX = foodPositionArray[0];
+        foodY = foodPositionArray[1];
         //
         //添加JButton
         JButton pauseGameButton = new JButton("Pause Game");
@@ -121,9 +121,21 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         int[] foodPositionArray = new int[2];
         foodPositionArray[0] = 25 + 25 * random.nextInt(34);
         foodPositionArray[1] = 75 + 25 * random.nextInt(24);
-        for (int i = 0; i < length; i++) {
-            if (snakeList.get(2 * i) == foodPositionArray[0] &&
-                    snakeList.get(2 * i + 1) == foodPositionArray[1]) {
+        ArrayList<Integer> buildingList = new ArrayList<>();
+        int sumLength;
+        if (gameMode) {
+            buildingList.addAll(GamePage.snakeList);
+            sumLength = GamePage.length;
+        } else {
+            buildingList.addAll(GamePage.snakeList);
+            buildingList.addAll(Snake.snakeList);
+            sumLength = GamePage.length + Snake.length;
+//            System.out.println(buildingList);
+//            System.out.println("sumLength " + sumLength);
+        }
+        for (int i = 0; i < sumLength; i++) {
+            if (buildingList.get(2 * i) == foodPositionArray[0] &&
+                    buildingList.get(2 * i + 1) == foodPositionArray[1]) {
                 foodPositionArray[0] = 25 + 25 * random.nextInt(34);
                 foodPositionArray[1] = 75 + 25 * random.nextInt(24);
                 i = 0;
@@ -144,11 +156,11 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             Data.body.paintIcon(this, g, snakeList.get(2 * i), snakeList.get(2 * i + 1));
         }
         if (!gameMode) {
-            Data.head1.paintIcon(this, g, anotherSnake.snakeList.get(0), anotherSnake.snakeList.get(1));
-            for (int i = 1; i < anotherSnake.length; i++) {
+            Data.head1.paintIcon(this, g, Snake.snakeList.get(0), Snake.snakeList.get(1));
+            for (int i = 1; i < Snake.length; i++) {
                 //蛇的身体长度根据length来控制
-                Data.body1.paintIcon(this, g, anotherSnake.snakeList.get(2 * i),
-                        anotherSnake.snakeList.get(2 * i + 1));
+                Data.body1.paintIcon(this, g, Snake.snakeList.get(2 * i),
+                        Snake.snakeList.get(2 * i + 1));
             }
         }
         //画食物
@@ -174,7 +186,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setColor(new Color(255, 156, 0));
             g.drawString("Player B", 550, 25);
             g.setColor(Color.white);
-            g.drawString("Length " + anotherSnake.length, 550, 40);
+            g.drawString("Length " + Snake.length, 550, 40);
             g.drawString("Score " + anotherSnake.score, 550, 55);
 //            Data.head1.paintIcon(this, g, 550, 50);
         }
@@ -541,23 +553,23 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
      */
     public void speedController(boolean speedUp) {
         if (!gameMode) {
-            if (length + anotherSnake.length >= 6 && length + anotherSnake.length < 20) {
+            if (length + Snake.length >= 6 && length + Snake.length < 20) {
                 timer.stop();
                 timer = new Timer(200, this);
                 timer.start();
-            } else if (length + anotherSnake.length >= 20 && length + anotherSnake.length < 30) {
+            } else if (length + Snake.length >= 20 && length + Snake.length < 30) {
                 timer.stop();
                 timer = new Timer(175, this);
                 timer.start();
-            } else if (length + anotherSnake.length >= 30 && length + anotherSnake.length < 40) {
+            } else if (length + Snake.length >= 30 && length + Snake.length < 40) {
                 timer.stop();
                 timer = new Timer(150, this);
                 timer.start();
-            } else if (length + anotherSnake.length >= 40 && length + anotherSnake.length < 50) {
+            } else if (length + Snake.length >= 40 && length + Snake.length < 50) {
                 timer.stop();
                 timer = new Timer(125, this);
                 timer.start();
-            } else if (length + anotherSnake.length >= 50) {
+            } else if (length + Snake.length >= 50) {
                 timer.stop();
                 timer = new Timer(100, this);
                 timer.start();

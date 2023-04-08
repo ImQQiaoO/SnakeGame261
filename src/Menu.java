@@ -119,7 +119,7 @@ public class Menu extends JPanel implements KeyListener {
                 throw new RuntimeException(ex);
             }
         }
-
+        new Color(84, 90, 94);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class Menu extends JPanel implements KeyListener {
                             } else {
                                 changeColor(g, black);
                             }
-                            drawText(g, 30, 80 + i * 30, i + ". " + score[0] + "---" + score[1], 20);
+                            drawText(g, 30, 80 + i * 30, i + ". " + score[0] + " --- " + score[1], 20);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -212,6 +212,7 @@ public class Menu extends JPanel implements KeyListener {
         gameFrame.setVisible(true); //Show the window
         frame.dispose();
         GamePage.border = border;
+        new Color(79, 85, 87);
     }
 
     @Override

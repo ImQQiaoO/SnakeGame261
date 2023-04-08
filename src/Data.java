@@ -4,17 +4,6 @@ import java.net.URL;
 
 public class Data {
     //头部图片
-    //头部：上下左右
-//    public static URL upUrl = Data.class.getResource("/statics/up.png");
-//    public static URL downUrl = Data.class.getResource("/statics/down.png");
-//    public static URL leftUrl = Data.class.getResource("/statics/left.png");
-//    public static URL rightUrl = Data.class.getResource("/statics/right.png");
-//    public static ImageIcon up = new ImageIcon(upUrl);
-//    public static ImageIcon down = new ImageIcon(downUrl);
-//    public static ImageIcon left = new ImageIcon(leftUrl);
-//    public static ImageIcon right = new ImageIcon(rightUrl);
-
-    /**/
     //head
     public static URL headUrl = Data.class.getResource("/statics/head.png");
     public static ImageIcon head = new ImageIcon(headUrl);

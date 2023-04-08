@@ -5,8 +5,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Snake {
-    int length;
-    ArrayList<Integer> snakeList = new ArrayList<>();
+    static int length;
+    static ArrayList<Integer> snakeList = new ArrayList<>();
     String direction;
     int score = 0;
     int heart = 3; //生命值
