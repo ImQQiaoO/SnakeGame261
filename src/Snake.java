@@ -123,24 +123,10 @@ public class Snake {
                     }).start();
                 } else if (poisonSeed == 1) {
                     score = score + 70;
-                } else {
-                    new Thread(() -> {
-                        try {
-//                                System.out.println(speedUp); // FOR TEST!!!
-                            int sleepTime = 5000;
-                            while (sleepTime > 0) {
-                                if (GamePage.isStart) {
-                                    Thread.sleep(1000);
-                                    sleepTime = sleepTime - 1000;
-                                } else {
-                                    Thread.sleep(100);
-                                }
-                            }
-//                                System.out.println(speedUp); // FOR TEST!!!
-                        } catch (InterruptedException interruptedException) {
-                            interruptedException.printStackTrace();
-                        }
-                    }).start();
+                } else if (poisonSeed == 2){   //双人模式下取消吃到苹果后蛇加速机制，改为生命值+1
+                    if (heart > 0 && heart < 3) {
+                        heart = heart + 1;
+                    }
                 }
             }
         }
