@@ -60,7 +60,6 @@ public class Snake {
                     for (int j = 0; j < 2 * deleteLength; j++) {
                         snakeList.remove(snakeList.size() - 1);
                     }
-//                    speedController(speedUp);
                     score = score + 50;
                 } else {
                     score = score + 70;
@@ -99,7 +98,6 @@ public class Snake {
                                     Thread.sleep(100);
                                 }
                             }
-//                            Thread.sleep(5000);
                             dizzy = false; //眩晕
                             dizzyTime = 2;
                         } catch (InterruptedException interruptedException) {
@@ -129,7 +127,6 @@ public class Snake {
                     new Thread(() -> {
                         try {
 //                                System.out.println(speedUp); // FOR TEST!!!
-//                            speedController(true);
                             int sleepTime = 5000;
                             while (sleepTime > 0) {
                                 if (GamePage.isStart) {
@@ -140,8 +137,6 @@ public class Snake {
                                 }
                             }
 //                                System.out.println(speedUp); // FOR TEST!!!
-//                            speedController(false);
-//                                speedUp = false;
                         } catch (InterruptedException interruptedException) {
                             interruptedException.printStackTrace();
                         }

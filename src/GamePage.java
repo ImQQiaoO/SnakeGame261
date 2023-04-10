@@ -130,8 +130,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             buildingList.addAll(GamePage.snakeList);
             buildingList.addAll(Snake.snakeList);
             sumLength = GamePage.length + Snake.length;
-//            System.out.println(buildingList);
-//            System.out.println("sumLength " + sumLength);
         }
         for (int i = 0; i < sumLength; i++) {
             if (buildingList.get(2 * i) == foodPositionArray[0] &&
@@ -188,7 +186,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setColor(Color.white);
             g.drawString("Length " + Snake.length, 550, 40);
             g.drawString("Score " + anotherSnake.score, 550, 55);
-//            Data.head1.paintIcon(this, g, 550, 50);
         }
         //游戏提示
         if (!isStart) {
@@ -309,7 +306,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 init();
             }
             repaint();
-//            System.out.println(snakeList);//todo: print out the snakeList
+//            System.out.println(snakeList);// print out the snakeList
         }
         //键盘控制走向
         if (!dizzy) {
@@ -354,7 +351,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             if (!gameMode) {
                 anotherSnake.anotherActionPerformed();
             }
-//            snakeAction(this.length, this.snakeList, this.direction, score);
             Snake.snakeAction(length, snakeList, direction);
 
             if (snakeList.get(0) == foodX && snakeList.get(1) == foodY) {
@@ -394,8 +390,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                         score = score + 70;
                     }
                     //加分
-//                    goldenFoodX = -100;
-//                    goldenFoodY = -100;
                     goldenFoodX.set(i, -100);
                     goldenFoodY.set(i, -100);
                 }

@@ -14,7 +14,6 @@ import java.util.Objects;
 public class Menu extends JPanel implements KeyListener {
 
     JFrame frame = new JFrame();
-//    public static String highestScore = "-";
 
     Color black = Color.BLACK;
     Color red = Color.RED;
@@ -79,8 +78,6 @@ public class Menu extends JPanel implements KeyListener {
     public void setupWindow(int width, int height) {
 
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.LINE_AXIS));
-//        frame.setLayout(new GridLayout(3, 2));
-//        frame.setLayout(new CardLayout());
         frame.setSize(width, height);
         frame.setLocation(200, 200);
         frame.setTitle("Snake-Menu");
@@ -89,10 +86,6 @@ public class Menu extends JPanel implements KeyListener {
         frame.setVisible(true);
         frame.addKeyListener(this);
         frame.setResizable(false);
-
-//        Insets insets = frame.getInsets();
-//        frame.setSize(width + insets.left + insets.right,
-//                height + insets.top + insets.bottom);
 
     }
 
@@ -119,7 +112,6 @@ public class Menu extends JPanel implements KeyListener {
                 throw new RuntimeException(ex);
             }
         }
-        new Color(84, 90, 94);
     }
 
     @Override
