@@ -10,10 +10,10 @@ public class Snake {
     String direction;
     int score = 0;
     int heart = 3; //生命值
-    boolean dizzy = false; //是否晕眩
+    static boolean dizzy = false; //是否晕眩
 
-    int dizzyCnt = 0; //晕眩计数器
-    int dizzyTime = 0; //晕眩时间
+    static int dizzyCnt = 0; //晕眩计数器
+    static int dizzyTime = 0; //晕眩时间
 
     public void init() {
         snakeList.clear();

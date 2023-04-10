@@ -205,15 +205,38 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
             g.drawString("You win! Press SPACE to restart.", 150, 300);
         }
-        if (dizzy && dizzyTime != 3) {
-            g.setColor(new Color(123, 37, 153));
-            g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("You're poisoned!", 300, 250);
-        }
-        if (dizzyCnt != 0 && !dizzy && dizzyTime != 3) {
-            g.setColor(new Color(49, 37, 153));
-            g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("Poisoning has been removed.", 300, 350);
+        if (gameMode) {
+            if (dizzy && dizzyTime != 3) {
+                g.setColor(new Color(123, 37, 153));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("You're poisoned!", 300, 250);
+            }
+            if (dizzyCnt != 0 && !dizzy && dizzyTime != 3) {
+                g.setColor(new Color(49, 37, 153));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("Poisoning has been removed.", 250, 350);
+            }
+        } else { //双人模式下中毒效果显示
+            if (dizzy && dizzyTime != 3) {
+                g.setColor(new Color(0, 225, 30));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("Player 1 is poisoned!", 300, 250);
+            }
+            if (dizzyCnt != 0 && !dizzy && dizzyTime != 3) {
+                g.setColor(new Color(225, 113, 0));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("Player 1 poisoning has been removed.", 150, 350);
+            }
+            if (Snake.dizzy && Snake.dizzyTime != 3) {
+                g.setColor(new Color(0, 174, 225));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("Player 2 is poisoned!", 300, 250);
+            }
+            if (Snake.dizzyCnt != 0 && !Snake.dizzy && Snake.dizzyTime != 3) {
+                g.setColor(new Color(203, 0, 225));
+                g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+                g.drawString("Player 2 poisoning has been removed.", 150, 350);
+            }
         }
         //draw the rest heart
         int gap = 0;
@@ -497,7 +520,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
 
     public static void specialAppleMaker() {
-        int appleSeed = new Random().nextInt(0, 10);
+        int appleSeed = new Random().nextInt(0, 15); // 概率为1/15
 //        appleSeed = 2; // FOR TEST!!!
         if (appleSeed == 1) {
             boolean goldenApple = true;
