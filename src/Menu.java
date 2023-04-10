@@ -212,7 +212,6 @@ public class Menu extends JPanel implements KeyListener {
         gameFrame.setVisible(true); //Show the window
         frame.dispose();
         GamePage.border = border;
-        new Color(79, 85, 87);
     }
 
     @Override

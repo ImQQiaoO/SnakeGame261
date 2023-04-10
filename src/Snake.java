@@ -36,7 +36,6 @@ public class Snake {
             length++;
             snakeList.add(0);
             snakeList.add(0);
-//            speedController(speedUp);
             //加分
             score = score + 10;
             //重新生成食物

@@ -350,6 +350,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
         if (isStart && !isFail && !isWin) {
 
+            speedController(speedUp);
             if (!gameMode) {
                 anotherSnake.anotherActionPerformed();
             }
@@ -364,7 +365,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 }
                 snakeList.add(0);
                 snakeList.add(0);
-                speedController(speedUp);
                 //加分
                 score = score + 10;
                 //重新生成食物
@@ -496,7 +496,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 }
             }
             repaint(); //需要不断地更新页面实现动画
-//            System.out.println(snakeList);//todo: print out the snakeList
+//            System.out.println(snakeList);// print out the snakeList
         }
         timer.start();//让时间动起来!
     }
