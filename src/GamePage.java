@@ -430,7 +430,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                     poisonFoodX.set(i, -100);
                     poisonFoodY.set(i, -100);
                     int poisonSeed = new Random().nextInt(0, 3);
-//                    poisonSeed = 2;
+//                    poisonSeed = 2; //TEST!!!
                     if (poisonSeed == 0) {
                         dizzyCnt = dizzyCnt + 1;
                         new Thread(() -> {
@@ -446,7 +446,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                                         Thread.sleep(100);
                                     }
                                 }
-//                            Thread.sleep(5000);
                                 dizzy = false; //眩晕
                                 dizzyTime = 2;
                             } catch (InterruptedException interruptedException) {
@@ -464,7 +463,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                                         Thread.sleep(100);
                                     }
                                 }
-//                            Thread.sleep(6000);
                                 dizzyTime = 3;
                             } catch (InterruptedException interruptedException) {
                                 interruptedException.printStackTrace();
@@ -472,27 +470,33 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                         }).start();
                     } else if (poisonSeed == 1) {
                         score = score + 70;
-                    } else {
-                        new Thread(() -> {
-                            try {
+                    } else if (poisonSeed == 2) {
+                        if (gameMode) {
+                            new Thread(() -> {
+                                try {
 //                                System.out.println(speedUp); // FOR TEST!!!
-                                speedController(true);
-                                int sleepTime = 5000;
-                                while (sleepTime > 0) {
-                                    if (isStart) {
-                                        Thread.sleep(1000);
-                                        sleepTime = sleepTime - 1000;
-                                    } else {
-                                        Thread.sleep(100);
+                                    speedController(true);
+                                    int sleepTime = 5000;
+                                    while (sleepTime > 0) {
+                                        if (isStart) {
+                                            Thread.sleep(1000);
+                                            sleepTime = sleepTime - 1000;
+                                        } else {
+                                            Thread.sleep(100);
+                                        }
                                     }
-                                }
 //                                System.out.println(speedUp); // FOR TEST!!!
-                                speedController(false);
+                                    speedController(false);
 //                                speedUp = false;
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
+                                } catch (InterruptedException interruptedException) {
+                                    interruptedException.printStackTrace();
+                                }
+                            }).start();
+                        } else{
+                            if (heart > 0 && heart < 3) {
+                                heart = heart + 1;
                             }
-                        }).start();
+                        }
                     }
                 }
             }
@@ -521,7 +525,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     public static void specialAppleMaker() {
         int appleSeed = new Random().nextInt(0, 15); // 概率为1/15
-//        appleSeed = 2; // FOR TEST!!!
+        appleSeed = 2; // TODO FOR TEST!!!
         if (appleSeed == 1) {
             boolean goldenApple = true;
             specialAppleThreadMaker(goldenFoodX, goldenFoodY, goldenApple);
