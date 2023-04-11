@@ -163,9 +163,9 @@ public class Menu extends JPanel implements KeyListener {
 
                 @Override
                 public void paintComponent(Graphics g) {
-                    changeBackgroundColor(g, new Color(102, 186, 101));
+                    changeBackgroundColor(g, new Color(33, 140, 122));
                     clearBackground(g, 500, 500);
-                    drawText(g, 40, 40, "Ranking List (Infinite Mode)", 20);
+                    drawText(g, 40, 50, "Ranking List (Infinite Mode)", 20);
                     //读取src/Score.txt文件
                     try {
                         FileReader fd = new FileReader("./src/Score.txt");
