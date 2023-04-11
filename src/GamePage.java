@@ -525,7 +525,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     public static void specialAppleMaker() {
         int appleSeed = new Random().nextInt(0, 15); // 概率为1/15
-//        appleSeed = 2; // FOR TEST!!!
+        appleSeed = 2; // TODO FOR TEST!!!
         if (appleSeed == 1) {
             boolean goldenApple = true;
             specialAppleThreadMaker(goldenFoodX, goldenFoodY, goldenApple);
