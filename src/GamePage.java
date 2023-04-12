@@ -525,7 +525,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     public static void specialAppleMaker() {
         int appleSeed = new Random().nextInt(0, 15); // 概率为1/15
-        appleSeed = 2; // TODO FOR TEST!!!
+//        appleSeed = 2; //   FOR TEST!!!
         if (appleSeed == 1) {
             boolean goldenApple = true;
             specialAppleThreadMaker(goldenFoodX, goldenFoodY, goldenApple);
@@ -542,12 +542,12 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         specialFoodY.add(specialFoodPositionArray[1]);
         //计时器，随机时间后特殊苹果消失
         new Thread(() -> {
+            int currIndex = specialFoodX.size() - 1;
             try {
                 int sleepTime;
                 if (goldenApple) { //当游戏暂停时，此线程休眠不会暂停。
-//                    Thread.sleep(new Random().nextInt(5000, 10000));
                     sleepTime = new Random().nextInt(5000, 10000);
-                } else {
+                } else {    //紫色苹果
                     sleepTime = 15000;
                 }
                 while (sleepTime > 0) {
@@ -561,8 +561,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 if (specialFoodX.size() == 0) {
                     return;
                 }
-                specialFoodX.remove(specialFoodX.size() - 1);
-                specialFoodY.remove(specialFoodY.size() - 1);
+
+                specialFoodX.set(currIndex, -500);
+                specialFoodY.set(currIndex, -500);
+
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
