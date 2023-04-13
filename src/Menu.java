@@ -107,7 +107,7 @@ public class Menu extends JPanel implements KeyListener {
             String fileName = "./src/Score.txt";
             Path path = Paths.get(fileName);
             try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-                bufferedWriter.write("0");
+                bufferedWriter.write("");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -127,14 +127,20 @@ public class Menu extends JPanel implements KeyListener {
         drawText(g, 120, 350, "- 3. Multi Player", 20);
         drawText(g, 120, 400, "- 4. Rank List", 20);
         changeColor(g, blue);
+        //先读取Score.txt文件，检查Score.txt文件是否为空，如果为空则显示为0，否则显示最高分
         String highestScore;
+        String highestScoreLine;
         try {
             FileReader fd = new FileReader("./src/Score.txt");
             BufferedReader br = new BufferedReader(fd);
-            String highestScoreLine = br.readLine();
-            highestScore = highestScoreLine.substring(highestScoreLine.indexOf("=") + 1);
+            highestScoreLine = br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        if (highestScoreLine == null) {
+            highestScore = "0";
+        } else {
+            highestScore = highestScoreLine.substring(highestScoreLine.indexOf("=") + 1);
         }
         drawText(g, 100, 470, "Highest Score: " + highestScore, 30);
 
