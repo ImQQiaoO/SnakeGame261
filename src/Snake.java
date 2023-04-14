@@ -182,19 +182,31 @@ public class Snake {
             switch (direction) {
                 case "R" -> {
                     snakeList.set(0, snakeList.get(0) + 25);
-                    if (snakeList.get(0) > 850) GamePage.isFail = true;
+                    if (snakeList.get(0) > 850) {
+                        GamePage.heart = 0;
+                        GamePage.isFail = true;
+                    }
                 }
                 case "L" -> {
                     snakeList.set(0, snakeList.get(0) - 25);
-                    if (snakeList.get(0) < 25) GamePage.isFail = true;
+                    if (snakeList.get(0) < 25) {
+                        GamePage.heart = 0;
+                        GamePage.isFail = true;
+                    }
                 }
                 case "U" -> {
                     snakeList.set(1, snakeList.get(1) - 25);
-                    if (snakeList.get(1) < 100) GamePage.isFail = true;
+                    if (snakeList.get(1) < 100) {
+                        GamePage.heart = 0;
+                        GamePage.isFail = true;
+                    }
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
-                    if (snakeList.get(1) > 675) GamePage.isFail = true;
+                    if (snakeList.get(1) > 675)  {
+                        GamePage.heart = 0;
+                        GamePage.isFail = true;
+                    }
                 }
             }
         }

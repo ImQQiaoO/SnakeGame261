@@ -146,7 +146,18 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);//清屏
         this.setBackground(new Color(40, 97, 81)); //设置面板的背景色
-        g.fillRect(25, 100, 850, 600); //绘制游戏区域 TODO：Y值被修改！！ 75->100
+        g.fillRect(25, 100, 850, 600); //绘制游戏区域
+        //边界:
+        if (gameMode && border) { // 1 模式下边界显示
+            for (int i = 0; i < 35; i++) {
+                Data.paling.paintIcon(this, g, 25 + i * 25, 75);
+                Data.paling.paintIcon(this, g, 25 + i * 25, 700);
+            }
+            for (int i = 0; i < 26; i++) {
+                Data.paling.paintIcon(this, g, 0, 75 + 25 * i);
+                Data.paling.paintIcon(this, g, 875, 75 + 25 * i);
+            }
+        }
         Data.head.paintIcon(this, g, snakeList.get(0), snakeList.get(1));
         for (int i = 1; i < length; i++) {
             //蛇的身体长度根据length来控制
