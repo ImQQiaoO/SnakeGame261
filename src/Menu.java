@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -202,14 +204,14 @@ public class Menu extends JPanel implements KeyListener {
     }
 
     public void modeChooser(boolean gameMode, boolean border) {
+        GamePage.border = border;
         JFrame gameFrame = new JFrame("Snake");
-        gameFrame.setBounds(10, 10, 900, 720);
+        gameFrame.setBounds(10, 10, 915, 760);
         gameFrame.setResizable(false);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.add(new GamePage(gameFrame, gameMode)); //ture: single player
         gameFrame.setVisible(true); //Show the window
         frame.dispose();
-        GamePage.border = border;
     }
 
     @Override

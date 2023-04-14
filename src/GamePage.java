@@ -37,7 +37,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     static boolean isFail = false; //游戏是否结束
     static int score; //游戏分数！
     static int heart = 3; //生命值
-    static boolean border = false;  //是否有边界
+    static boolean border;  //是否有边界
     boolean isWin = false; //是否胜利;
     JFrame gameFrame;
     boolean dizzy = false; //是否晕眩
@@ -57,7 +57,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         this.addKeyListener(this); //键盘监听事件
         timer.start();
         this.gameFrame = gameFrame;
-        System.out.println(gameMode);
     }
 
     //初始化方法
@@ -69,7 +68,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         timer = new Timer(200, this);
         timer.start();
         snakeList.clear();
-        Collections.addAll(snakeList, 100, 100, 75, 100, 50, 100);//init snakeList
+        Collections.addAll(snakeList, 100, 125, 75, 125, 50, 125);//init snakeList
         goldenFoodX.clear();
         goldenFoodY.clear();
         poisonFoodX.clear(); //init poisonFood
@@ -120,7 +119,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public static int[] randomMaker() {
         int[] foodPositionArray = new int[2];
         foodPositionArray[0] = 25 + 25 * random.nextInt(34);
-        foodPositionArray[1] = 75 + 25 * random.nextInt(24);
+        foodPositionArray[1] = 100 + 25 * random.nextInt(24);
         ArrayList<Integer> buildingList = new ArrayList<>();
         int sumLength;
         if (gameMode) {
@@ -135,7 +134,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             if (buildingList.get(2 * i) == foodPositionArray[0] &&
                     buildingList.get(2 * i + 1) == foodPositionArray[1]) {
                 foodPositionArray[0] = 25 + 25 * random.nextInt(34);
-                foodPositionArray[1] = 75 + 25 * random.nextInt(24);
+                foodPositionArray[1] = 100 + 25 * random.nextInt(24);
                 i = 0;
             }
         }
@@ -147,7 +146,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);//清屏
         this.setBackground(new Color(40, 97, 81)); //设置面板的背景色
-        g.fillRect(25, 75, 850, 600); //绘制游戏区域
+        g.fillRect(25, 100, 850, 600); //绘制游戏区域 TODO：Y值被修改！！ 75->100
         Data.head.paintIcon(this, g, snakeList.get(0), snakeList.get(1));
         for (int i = 1; i < length; i++) {
             //蛇的身体长度根据length来控制
@@ -223,7 +222,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         if (!isStart) {
             g.setColor(Color.white);
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("Press SPACE to start!", 300, 300);
+            g.drawString("Press SPACE to start!", 270, 300);
         }
         //失败判断
         if (isFail && gameMode) {
@@ -284,7 +283,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    private void winnerPrinter(Graphics g) {
+    public void winnerPrinter(Graphics g) {
         int scoreA = score + heart * 25;
         int scoreB = anotherSnake.score + anotherSnake.heart * 25;
         g.setColor(new Color(255, 0, 0));

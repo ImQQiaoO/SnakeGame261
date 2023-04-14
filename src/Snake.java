@@ -19,7 +19,7 @@ public class Snake {
     public void init() {
         snakeList.clear();
         if (!GamePage.gameMode) {
-            Collections.addAll(snakeList, 100, 150, 75, 150, 50, 150);
+            Collections.addAll(snakeList, 100, 175, 75, 175, 50, 175);
         }
         score = 0;
         length = 3;
@@ -167,14 +167,14 @@ public class Snake {
                 }
                 case "U" -> {
                     snakeList.set(1, snakeList.get(1) - 25);
-                    if (snakeList.get(1) < 75){
-                        snakeList.set(1, 650);
+                    if (snakeList.get(1) < 100){
+                        snakeList.set(1, 675);
                     }
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
                     if (snakeList.get(1) > 650){
-                        snakeList.set(1, 75);
+                        snakeList.set(1, 100);
                     }
                 }
             }
@@ -190,11 +190,11 @@ public class Snake {
                 }
                 case "U" -> {
                     snakeList.set(1, snakeList.get(1) - 25);
-                    if (snakeList.get(1) < 75) GamePage.isFail = true;
+                    if (snakeList.get(1) < 100) GamePage.isFail = true;
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
-                    if (snakeList.get(1) > 650) GamePage.isFail = true;
+                    if (snakeList.get(1) > 675) GamePage.isFail = true;
                 }
             }
         }

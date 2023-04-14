@@ -34,5 +34,8 @@ public class Data {
     //heart1
     public static URL heartUrl1 = Data.class.getResource("/statics/fullHeart1.png");
     public static ImageIcon heart1 = new ImageIcon(heartUrl1);
+    //paling
+    public static URL palingUrl = Data.class.getResource("/statics/paling.png");
+    public static ImageIcon paling = new ImageIcon(palingUrl);
 
 }
