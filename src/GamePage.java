@@ -161,6 +161,38 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                         Snake.snakeList.get(2 * i + 1));
             }
         }
+        //draw the rest heart
+        int gap = 0;
+        int maxHeart = 3;
+        if (gameMode) {
+            for (int i = 0; i < maxHeart; i++) {
+                gap++;
+                if (i < heart) {
+                    Data.heart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
+                }
+            }
+        } else { //Double Mode
+            for (int i = 0; i < maxHeart; i++) {
+                gap++;
+                if (i < heart) {
+                    Data.heart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
+                }
+            }
+
+            gap = 0;
+            for (int i = 0; i < maxHeart; i++) {
+                gap++;
+                if (i < anotherSnake.heart) {
+                    Data.heart1.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
+                } else {
+                    Data.emptyHeart.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
+                }
+            }
+        }
         //画食物
         Data.food.paintIcon(this, g, foodX, foodY); //Draw the normal apple
         for (int i = 0; i < goldenFoodX.size(); i++) { //Draw the golden apple
@@ -200,16 +232,17 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.drawString("You Dead, Press SPACE to restart!", 145, 300);
             direction = "R";
         }
-        if (isFail && !gameMode) { //双人模式失败判断
+        //双人模式失败判断
+        if (isFail && !gameMode) {
             g.setColor(Color.RED);
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("Player A Dead, Press SPACE to restart!", 100, 300);
-            direction = "R";
+            g.drawString("Player A Dead!", 290, 250);
+            winnerPrinter(g);
         } else if (Snake.isFail && !gameMode) {
             g.setColor(new Color(255, 156, 0));
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("Player B Dead, Press SPACE to restart!", 100, 300);
-            direction = "R";
+            g.drawString("Player B Dead!", 290, 250);
+            winnerPrinter(g);
         }
         if (isWin) {
             g.setColor(new Color(181, 163, 20));
@@ -249,38 +282,28 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 g.drawString("Player 2 poisoning has been removed.", 150, 350);
             }
         }
-        //draw the rest heart
-        int gap = 0;
-        int maxHeart = 3;
-        if (gameMode) {
-            for (int i = 0; i < maxHeart; i++) {
-                gap++;
-                if (i < heart) {
-                    Data.heart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
-                } else {
-                    Data.emptyHeart.paintIcon(this, g, 625 + i * 30 + gap * 7, 30);
-                }
-            }
-        } else { //Double Mode
-            for (int i = 0; i < maxHeart; i++) {
-                gap++;
-                if (i < heart) {
-                    Data.heart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
-                } else {
-                    Data.emptyHeart.paintIcon(this, g, 300 + i * 30 + gap * 7, 20);
-                }
-            }
+    }
 
-            gap = 0;
-            for (int i = 0; i < maxHeart; i++) {
-                gap++;
-                if (i < anotherSnake.heart) {
-                    Data.heart1.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
-                } else {
-                    Data.emptyHeart.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
-                }
-            }
+    private void winnerPrinter(Graphics g) {
+        int scoreA = score + heart * 25;
+        int scoreB = anotherSnake.score + anotherSnake.heart * 25;
+        g.setColor(new Color(255, 0, 0));
+        g.drawString("Player A's Final Score: " + scoreA, 180, 300);
+        g.setColor(new Color(255, 156, 0));
+        g.drawString("Player B's Final Score: " + scoreB, 180, 350);
+        g.setColor(new Color(4, 122, 189));
+        if (scoreA > scoreB) {
+            g.drawString("Player A Wins!", 290, 400);
+        } else if (scoreA < scoreB) {
+            g.drawString("Player B Wins!", 290, 400);
+        } else {
+            g.drawString("Draw!", 290, 400);
         }
+        g.setColor(new Color(255, 255, 255));
+        Data.heart.paintIcon(this, g, 310, 420);
+        g.drawString("= 25 Marks", 350, 450);
+        g.drawString("Press SPACE to restart!", 200, 500);
+        direction = "R";
     }
 
     public void getNewHighestScore() {
@@ -504,7 +527,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                                     interruptedException.printStackTrace();
                                 }
                             }).start();
-                        } else{
+                        } else {
                             if (heart > 0 && heart < 3) {
                                 heart = heart + 1;
                             }
