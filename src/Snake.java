@@ -14,6 +14,7 @@ public class Snake {
 
     static int dizzyCnt = 0; //晕眩计数器
     static int dizzyTime = 0; //晕眩时间
+    static boolean isFail = false;
 
     public void init() {
         snakeList.clear();
@@ -27,6 +28,7 @@ public class Snake {
         dizzyCnt = 0;
         dizzyTime = 0;
         heart = 3;
+        isFail = false;
     }
 
     public void anotherActionPerformed() {
@@ -137,7 +139,7 @@ public class Snake {
                     && Objects.equals(snakeList.get(2 * i + 1), snakeList.get(1))) {
                 heart = heart - 1;
                 if (heart == 0) {
-                    GamePage.isFail = true;
+                    Snake.isFail = true;
                 }
                 break;
             }

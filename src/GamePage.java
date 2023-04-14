@@ -194,10 +194,21 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.drawString("Press SPACE to start!", 300, 300);
         }
         //失败判断
-        if (isFail) {
+        if (isFail && gameMode) {
             g.setColor(Color.RED);
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
-            g.drawString("You Dead, Press SPACE to restart!", 200, 300);
+            g.drawString("You Dead, Press SPACE to restart!", 145, 300);
+            direction = "R";
+        }
+        if (isFail && !gameMode) { //双人模式失败判断
+            g.setColor(Color.RED);
+            g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+            g.drawString("Player A Dead, Press SPACE to restart!", 100, 300);
+            direction = "R";
+        } else if (Snake.isFail && !gameMode) {
+            g.setColor(new Color(255, 156, 0));
+            g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
+            g.drawString("Player B Dead, Press SPACE to restart!", 100, 300);
             direction = "R";
         }
         if (isWin) {
@@ -313,8 +324,9 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_SPACE) {
-            if (isFail) {
+            if (isFail || Snake.isFail) {
                 isFail = false;
+                Snake.isFail = false;
                 init();
             } else {
                 isStart = !isStart;
@@ -368,7 +380,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (isStart && !isFail && !isWin) {
+        if (isStart && !isFail && !isWin && !Snake.isFail) {
 
             speedController(speedUp);
             if (!gameMode) {
