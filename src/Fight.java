@@ -21,7 +21,8 @@ public class Fight {
         for (int i = 4; i < Snake.snakeList.size() / 2; i++) {
             if (Objects.equals(GamePage.snakeList.get(0), Snake.snakeList.get(2 * i)) &&
                     Objects.equals(GamePage.snakeList.get(1), Snake.snakeList.get(2 * i + 1))) {
-                Snake.length = i + 1;
+//                Snake.length = i + 1;
+                Snake.length = i;
                 System.out.println(Snake.length);
                 Snake.snakeList = new ArrayList<>(Snake.snakeList.subList(0, 2 * Snake.length));
                 System.out.println(Snake.snakeList);
@@ -45,7 +46,8 @@ public class Fight {
         for (int i = 4; i < GamePage.snakeList.size() / 2; i++) {
             if (Objects.equals(Snake.snakeList.get(0), GamePage.snakeList.get(2 * i)) &&
                     Objects.equals(Snake.snakeList.get(1), GamePage.snakeList.get(2 * i + 1))) {
-                GamePage.length = i + 1;
+//                GamePage.length = i + 1;
+                GamePage.length = i;
                 System.out.println(GamePage.length);
                 GamePage.snakeList = new ArrayList<>(GamePage.snakeList.subList(0, 2 * GamePage.length));
                 System.out.println(GamePage.snakeList);
