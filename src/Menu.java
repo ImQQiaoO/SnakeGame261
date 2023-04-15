@@ -151,7 +151,7 @@ public class Menu extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '1') {
-            modeChooser(true, true);      //Border
+            modeChooser(true, true); //gameMode:true单人模式  border:true有边界
         } else if (e.getKeyChar() == '2') {
             modeChooser(true, false);
         } else if (e.getKeyChar() == '3') {

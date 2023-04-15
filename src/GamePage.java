@@ -22,7 +22,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     //将蛇的位置信息存储到集合中，此集合中所有的偶数位置存储蛇的x坐标，所有的奇数位置存储蛇的y坐标
     static ArrayList<Integer> snakeList = new ArrayList<>();
-    //    int[] snakeLastPosition = new int[2]; //记录上一次运动的蛇尾的位置  TODO
     String direction = "R"; //蛇的方向 ： R:右  L:左  U:上  D:下
     static boolean isStart = false; //游戏是否开始
     Timer timer = new Timer(200, this);
@@ -46,6 +45,8 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     boolean speedUp = false; //是否加速
     static boolean gameMode; //set game mode
     Snake anotherSnake; //双人模式下的另一条蛇
+    static ArrayList<Integer> obstacleX = new ArrayList<>(); //障碍物的数组
+    static ArrayList<Integer> obstacleY = new ArrayList<>();
 
     public GamePage(JFrame gameFrame, boolean gameMode) {
         GamePage.gameMode = gameMode;       //set game mode, true: single mode, false: double mode.
@@ -81,6 +82,26 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         speedUp = false;
         if (!gameMode) {        //双人模式：初始化另一条蛇
             anotherSnake.init();
+        }
+        obstacleX.clear(); //init obstacle
+        obstacleY.clear();
+        if (border && gameMode){
+            for (int i = 0; i < 16; i++) {
+                obstacleX.add(25 * (i + 10));
+                obstacleY.add(9 * 25);
+                obstacleX.add(25 * (i + 10));
+                obstacleY.add(22 * 25);
+            }
+            for (int i = 0; i < 2; i++) {
+                obstacleX.add(25 * 10);
+                obstacleY.add((10 + i) * 25);
+                obstacleX.add(25 * 25);
+                obstacleY.add((10 + i) * 25);
+                obstacleX.add(25 * 10);
+                obstacleY.add((20 + i) * 25);
+                obstacleX.add(25 * 25);
+                obstacleY.add((20 + i) * 25);
+            }
         }
         int[] foodPositionArray = randomMaker();
         foodX = foodPositionArray[0];
@@ -122,9 +143,17 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         foodPositionArray[1] = 100 + 25 * random.nextInt(24);
         ArrayList<Integer> buildingList = new ArrayList<>();
         int sumLength;
-        if (gameMode) {
+        if (gameMode) { //单人模式
             buildingList.addAll(GamePage.snakeList);
             sumLength = GamePage.length;
+            if (border) { //避免苹果出现在障碍物上
+                for (int i = 0; i < obstacleX.size(); i++) {
+                    buildingList.add(obstacleX.get(i));
+                    buildingList.add(obstacleY.get(i));
+                }
+                sumLength = sumLength + obstacleX.size();
+            }
+
         } else {
             buildingList.addAll(GamePage.snakeList);
             buildingList.addAll(Snake.snakeList);
@@ -156,6 +185,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             for (int i = 0; i < 26; i++) {
                 Data.paling.paintIcon(this, g, 0, 75 + 25 * i);
                 Data.paling.paintIcon(this, g, 875, 75 + 25 * i);
+            }
+            //地图内部的障碍物
+            for (int i = 0; i < obstacleX.size(); i++) {
+                Data.paling.paintIcon(this, g, obstacleX.get(i), obstacleY.get(i));
             }
         }
         Data.head.paintIcon(this, g, snakeList.get(0), snakeList.get(1));
@@ -418,6 +451,18 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             speedController(speedUp);
             if (!gameMode) {
                 anotherSnake.anotherActionPerformed();
+            }
+            //如果头部与地图内部的障碍物重合，那么游戏失败
+            if (border) {
+                for (int i = 0; i < GamePage.obstacleX.size(); i++) {
+                    if (Objects.equals(snakeList.get(0), GamePage.obstacleX.get(i)) &&
+                            Objects.equals(snakeList.get(1), GamePage.obstacleY.get(i))) {
+                        GamePage.heart = 0;
+                        GamePage.isFail = true;
+                        repaint();
+                        return;
+                    }
+                }
             }
             Snake.snakeAction(length, snakeList, direction);
 

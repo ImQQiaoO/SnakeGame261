@@ -125,7 +125,7 @@ public class Snake {
                     }).start();
                 } else if (poisonSeed == 1) {
                     score = score + 70;
-                } else if (poisonSeed == 2){   //双人模式下取消吃到苹果后蛇加速机制，改为生命值+1
+                } else if (poisonSeed == 2) {   //双人模式下取消吃到苹果后蛇加速机制，改为生命值+1
                     if (heart > 0 && heart < 3) {
                         heart = heart + 1;
                     }
@@ -155,25 +155,25 @@ public class Snake {
             switch (direction) {
                 case "R" -> {
                     snakeList.set(0, snakeList.get(0) + 25);
-                    if (snakeList.get(0) > 850){
+                    if (snakeList.get(0) > 850) {
                         snakeList.set(0, 25);
                     }
                 }
                 case "L" -> {
                     snakeList.set(0, snakeList.get(0) - 25);
-                    if (snakeList.get(0) < 25){
+                    if (snakeList.get(0) < 25) {
                         snakeList.set(0, 850);
                     }
                 }
                 case "U" -> {
                     snakeList.set(1, snakeList.get(1) - 25);
-                    if (snakeList.get(1) < 100){
+                    if (snakeList.get(1) < 100) {
                         snakeList.set(1, 675);
                     }
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
-                    if (snakeList.get(1) > 650){
+                    if (snakeList.get(1) > 650) {
                         snakeList.set(1, 100);
                     }
                 }
@@ -203,7 +203,7 @@ public class Snake {
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
-                    if (snakeList.get(1) > 675)  {
+                    if (snakeList.get(1) > 675) {
                         GamePage.heart = 0;
                         GamePage.isFail = true;
                     }
@@ -211,27 +211,28 @@ public class Snake {
             }
         }
     }
-        public void secondSnakeDirection ( int keyCode){
-            if (!dizzy) {
-                if (keyCode == KeyEvent.VK_A && !direction.equals("R")) {
-                    direction = "L";
-                } else if (keyCode == KeyEvent.VK_D && !direction.equals("L")) {
-                    direction = "R";
-                } else if (keyCode == KeyEvent.VK_W && !direction.equals("D")) {
-                    direction = "U";
-                } else if (keyCode == KeyEvent.VK_S && !direction.equals("U")) {
-                    direction = "D";
-                }
-            } else { //dizzy
-                if (keyCode == KeyEvent.VK_A && !direction.equals("L")) {
-                    direction = "R";
-                } else if (keyCode == KeyEvent.VK_D && !direction.equals("R")) {
-                    direction = "L";
-                } else if (keyCode == KeyEvent.VK_W && !direction.equals("U")) {
-                    direction = "D";
-                } else if (keyCode == KeyEvent.VK_S && !direction.equals("D")) {
-                    direction = "U";
-                }
+
+    public void secondSnakeDirection(int keyCode) {
+        if (!dizzy) {
+            if (keyCode == KeyEvent.VK_A && !direction.equals("R")) {
+                direction = "L";
+            } else if (keyCode == KeyEvent.VK_D && !direction.equals("L")) {
+                direction = "R";
+            } else if (keyCode == KeyEvent.VK_W && !direction.equals("D")) {
+                direction = "U";
+            } else if (keyCode == KeyEvent.VK_S && !direction.equals("U")) {
+                direction = "D";
+            }
+        } else { //dizzy
+            if (keyCode == KeyEvent.VK_A && !direction.equals("L")) {
+                direction = "R";
+            } else if (keyCode == KeyEvent.VK_D && !direction.equals("R")) {
+                direction = "L";
+            } else if (keyCode == KeyEvent.VK_W && !direction.equals("U")) {
+                direction = "D";
+            } else if (keyCode == KeyEvent.VK_S && !direction.equals("D")) {
+                direction = "U";
             }
         }
     }
+}
