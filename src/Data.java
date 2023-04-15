@@ -37,5 +37,8 @@ public class Data {
     //paling
     public static URL palingUrl = Data.class.getResource("/statics/paling.png");
     public static ImageIcon paling = new ImageIcon(palingUrl);
+    //packet
+    public static URL packetUrl = Data.class.getResource("/statics/packet.png");
+    public static ImageIcon packet = new ImageIcon(packetUrl);
 
 }

@@ -37,6 +37,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     static int score; //游戏分数！
     static int heart = 3; //生命值
     static boolean border;  //是否有边界
+    static boolean fight; //是否是对战模式
     boolean isWin = false; //是否胜利;
     JFrame gameFrame;
     boolean dizzy = false; //是否晕眩
@@ -64,12 +65,23 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public void init() {
         isFail = false;
         isWin = false;
-        length = 3; //init length = 3
+        if (!fight) {
+            length = 3; //init length = 3
+        } else {
+            length = 12;
+        }
         timer.stop();
         timer = new Timer(200, this);
         timer.start();
         snakeList.clear();
-        Collections.addAll(snakeList, 100, 125, 75, 125, 50, 125);//init snakeList
+        if (!fight) {
+            Collections.addAll(snakeList, 100, 125, 75, 125, 50, 125);//init snakeList
+        } else {
+            for (int i = 0; i < 12; i++) {
+                snakeList.add(400 - 25 * i);
+                snakeList.add(125);
+            }
+        }
         goldenFoodX.clear();
         goldenFoodY.clear();
         poisonFoodX.clear(); //init poisonFood
@@ -85,7 +97,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
         obstacleX.clear(); //init obstacle
         obstacleY.clear();
-        if (border && gameMode){
+        if (border && gameMode) {
             for (int i = 0; i < 16; i++) {
                 obstacleX.add(25 * (i + 10));
                 obstacleY.add(9 * 25);
@@ -106,6 +118,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         int[] foodPositionArray = randomMaker();
         foodX = foodPositionArray[0];
         foodY = foodPositionArray[1];
+        if (fight) {    //在fight模式下，游戏面板中不会出现苹果
+            foodX = -500;
+            foodY = -500;
+        }
         //
         //添加JButton
         JButton pauseGameButton = new JButton("Pause Game");
@@ -191,17 +207,39 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 Data.paling.paintIcon(this, g, obstacleX.get(i), obstacleY.get(i));
             }
         }
+
         Data.head.paintIcon(this, g, snakeList.get(0), snakeList.get(1));
-        for (int i = 1; i < length; i++) {
-            //蛇的身体长度根据length来控制
-            Data.body.paintIcon(this, g, snakeList.get(2 * i), snakeList.get(2 * i + 1));
-        }
-        if (!gameMode) {
+        if (!fight) {
+            for (int i = 1; i < length; i++) {
+                //蛇的身体长度根据length来控制
+                Data.body.paintIcon(this, g, snakeList.get(2 * i), snakeList.get(2 * i + 1));
+            }
+            if (!gameMode) {
+                Data.head1.paintIcon(this, g, Snake.snakeList.get(0), Snake.snakeList.get(1));
+                for (int i = 1; i < Snake.length; i++) {
+                    //蛇的身体长度根据length来控制
+                    Data.body1.paintIcon(this, g, Snake.snakeList.get(2 * i),
+                            Snake.snakeList.get(2 * i + 1));
+                }
+            }
+        } else {
+            for (int i = 1; i < length; i++) {
+                //蛇的身体长度根据length来控制
+                if (i < 4) {
+                    Data.body.paintIcon(this, g, snakeList.get(2 * i), snakeList.get(2 * i + 1));
+                }
+                if (i >= 4) {
+                    Data.packet.paintIcon(this, g, snakeList.get(2 * i), snakeList.get(2 * i + 1));
+                }
+            }
             Data.head1.paintIcon(this, g, Snake.snakeList.get(0), Snake.snakeList.get(1));
             for (int i = 1; i < Snake.length; i++) {
-                //蛇的身体长度根据length来控制
-                Data.body1.paintIcon(this, g, Snake.snakeList.get(2 * i),
-                        Snake.snakeList.get(2 * i + 1));
+                if (i < 4) {
+                    Data.body1.paintIcon(this, g, Snake.snakeList.get(2 * i), Snake.snakeList.get(2 * i + 1));
+                }
+                if (i >= 4) {
+                    Data.packet.paintIcon(this, g, Snake.snakeList.get(2 * i), Snake.snakeList.get(2 * i + 1));
+                }
             }
         }
         //draw the rest heart
@@ -229,7 +267,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             gap = 0;
             for (int i = 0; i < maxHeart; i++) {
                 gap++;
-                if (i < anotherSnake.heart) {
+                if (i < Snake.heart) {
                     Data.heart1.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
                 } else {
                     Data.emptyHeart.paintIcon(this, g, 650 + i * 30 + gap * 7, 20);
@@ -329,7 +367,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     public void winnerPrinter(Graphics g) {
         int scoreA = score + heart * 25;
-        int scoreB = anotherSnake.score + anotherSnake.heart * 25;
+        int scoreB = anotherSnake.score + Snake.heart * 25;
         g.setColor(new Color(255, 0, 0));
         g.drawString("Player A's Final Score: " + scoreA, 180, 300);
         g.setColor(new Color(255, 156, 0));
@@ -605,6 +643,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                     }
                     break;
                 }
+            }
+            if (fight) {
+                //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
+                Fight.GPTouchSnake();
             }
             repaint(); //需要不断地更新页面实现动画
 //            System.out.println(snakeList);// print out the snakeList

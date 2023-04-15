@@ -151,11 +151,11 @@ public class Menu extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '1') {
-            modeChooser(true, true); //gameMode:true单人模式  border:true有边界
+            modeChooser(true, true, false); //gameMode:true单人模式  border:true有边界
         } else if (e.getKeyChar() == '2') {
-            modeChooser(true, false);
+            modeChooser(true, false, false);
         } else if (e.getKeyChar() == '3') {
-            modeChooser(false, false);
+            modeChooser(false, false, false);
         } else if (e.getKeyChar() == '4') {  //Show rank List Here:
             class RankList extends JPanel {
                 public RankList() {
@@ -198,11 +198,14 @@ public class Menu extends JPanel implements KeyListener {
                 }
             }
             new RankList();
+        } else if (e.getKeyChar() == '5') {  //TODO: temp
+            modeChooser(false, false, true);
         }
     }
 
-    public void modeChooser(boolean gameMode, boolean border) {
+    public void modeChooser(boolean gameMode, boolean border, boolean fight) {
         GamePage.border = border;
+        GamePage.fight = fight;
         JFrame gameFrame = new JFrame("Snake");
         gameFrame.setBounds(10, 10, 915, 760);
         gameFrame.setResizable(false);

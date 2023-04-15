@@ -9,7 +9,7 @@ public class Snake {
     static ArrayList<Integer> snakeList = new ArrayList<>();
     String direction;
     int score = 0;
-    int heart = 3; //生命值
+    static int heart = 3; //生命值
     static boolean dizzy = false; //是否晕眩
 
     static int dizzyCnt = 0; //晕眩计数器
@@ -18,12 +18,22 @@ public class Snake {
 
     public void init() {
         snakeList.clear();
-        if (!GamePage.gameMode) {
+        if (!GamePage.gameMode && !GamePage.fight) {
             Collections.addAll(snakeList, 100, 175, 75, 175, 50, 175);
+        } else if (!GamePage.gameMode) {
+            for (int i = 12; i > 0; i--) {
+                snakeList.add(775 - 25 * i);
+                snakeList.add(650);
+            }
         }
         score = 0;
-        length = 3;
-        direction = "R";
+        if (!GamePage.fight) {
+            length = 3; //init length = 3
+            direction = "R";
+        } else {
+            length = 12;
+            direction = "L";
+        }
         dizzy = false;
         dizzyCnt = 0;
         dizzyTime = 0;
@@ -144,6 +154,10 @@ public class Snake {
                 break;
             }
         }
+        if (GamePage.fight) {
+            //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
+            Fight.SnakeTouchGP();
+        }
     }
 
     public static void snakeAction(int length, ArrayList<Integer> snakeList, String direction) {
@@ -173,7 +187,7 @@ public class Snake {
                 }
                 case "D" -> {
                     snakeList.set(1, snakeList.get(1) + 25);
-                    if (snakeList.get(1) > 650) {
+                    if (snakeList.get(1) > 675) {
                         snakeList.set(1, 100);
                     }
                 }
