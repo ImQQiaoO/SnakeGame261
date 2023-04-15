@@ -154,10 +154,10 @@ public class Snake {
                 break;
             }
         }
-        if (GamePage.fight) {
-            //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
-            Fight.SnakeTouchGP();
-        }
+//        if (GamePage.fight) {     TODO: Why there can't!!!
+//            //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
+//            Fight.SnakeTouchGP();
+//        }
     }
 
     public static void snakeAction(int length, ArrayList<Integer> snakeList, String direction) {

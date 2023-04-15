@@ -5,7 +5,6 @@ public class Fight {
 
     public Fight() {
     }
-
     public static void GPTouchSnake() {
         for (int i = 0; i < 4; i++) {
             if (Objects.equals(GamePage.snakeList.get(0), Snake.snakeList.get(2 * i)) &&

@@ -647,6 +647,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             if (fight) {
                 //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
                 Fight.GPTouchSnake();
+                Fight.SnakeTouchGP();
             }
             repaint(); //需要不断地更新页面实现动画
 //            System.out.println(snakeList);// print out the snakeList
