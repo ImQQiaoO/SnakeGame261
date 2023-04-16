@@ -74,6 +74,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         timer = new Timer(200, this);
         timer.start();
         snakeList.clear();
+        Fight.appleList.clear();
         if (!fight) {
             Collections.addAll(snakeList, 100, 125, 75, 125, 50, 125);//init snakeList
         } else {
