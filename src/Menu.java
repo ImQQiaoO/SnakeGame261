@@ -91,7 +91,7 @@ public class Menu extends JPanel implements KeyListener {
 
 
     public Menu() {
-        setupWindow(500, 550);
+        setupWindow(500, 590);
 
         //检查是否有Score.txt文件，如果没有则创建，用来记录最高分
         boolean isScoreFileExist = false;
@@ -119,13 +119,15 @@ public class Menu extends JPanel implements KeyListener {
         changeBackgroundColor(g, new Color(102, 186, 101));
         clearBackground(g, 500, 600);
         changeColor(g, blue);
-        drawText(g, 100, 100, "Welcome to Snake!", 30);
+        drawText(g, 100, 80, "Welcome to Snake!", 30);
         changeColor(g, black);
-        drawText(g, 100, 150, "Please Choose Game Mode:", 20);
-        drawText(g, 120, 250, "- 1. Single Player (Quick start)", 20);
-        drawText(g, 120, 300, "- 2. Single Player (Infinite Mode)", 20);
-        drawText(g, 120, 350, "- 3. Multi Player", 20);
-        drawText(g, 120, 400, "- 4. Rank List", 20);
+        drawText(g, 100, 130, "Please Choose Game Mode:", 20);
+        drawText(g, 120, 230, "- 1. Single Player (Quick start)", 20);
+        drawText(g, 120, 280, "- 2. Single Player (Infinite Mode)", 20);
+        drawText(g, 120, 330, "- 3. Multi Player (Peace & Love)", 20);
+        drawText(g, 120, 380, "- 4. Multi Player (Competitive)", 20);
+        drawText(g, 120, 430, "- 5. Rank List", 20);
+        drawText(g, 120, 480, "- 6. INSTRUCTIONS", 20);
         changeColor(g, blue);
         //先读取Score.txt文件，检查Score.txt文件是否为空，如果为空则显示为0，否则显示最高分
         String highestScore;
@@ -142,9 +144,9 @@ public class Menu extends JPanel implements KeyListener {
         } else {
             highestScore = highestScoreLine.substring(highestScoreLine.indexOf("=") + 1);
         }
-        drawText(g, 100, 470, "Highest Score: " + highestScore, 30);
+        drawText(g, 100, 520, "Highest Score: " + highestScore, 30);
 
-        Data.label.paintIcon(this, g, 210, 170);
+        Data.label.paintIcon(this, g, 210, 150);
     }
 
     //添加键盘监听事件
@@ -156,7 +158,9 @@ public class Menu extends JPanel implements KeyListener {
             modeChooser(true, false, false);
         } else if (e.getKeyChar() == '3') {
             modeChooser(false, false, false);
-        } else if (e.getKeyChar() == '4') {  //Show rank List Here:
+        } else if (e.getKeyChar() == '4') {
+            modeChooser(false, false, true);
+        } else if (e.getKeyChar() == '5') {  //Show rank List Here:
             class RankList extends JPanel {
                 public RankList() {
                     JFrame rankListFrame = new JFrame("Ranking list");
@@ -166,7 +170,6 @@ public class Menu extends JPanel implements KeyListener {
                     rankListFrame.setLayout(new BoxLayout(rankListFrame.getContentPane(), BoxLayout.LINE_AXIS));
                     rankListFrame.add(this);
                 }
-
                 @Override
                 public void paintComponent(Graphics g) {
                     changeBackgroundColor(g, new Color(33, 140, 122));
@@ -198,8 +201,8 @@ public class Menu extends JPanel implements KeyListener {
                 }
             }
             new RankList();
-        } else if (e.getKeyChar() == '5') {  //TODO: temp
-            modeChooser(false, false, true);
+        } else if (e.getKeyChar() == '6') {
+            System.out.println("Under construction"); //TODO: Add instructions
         }
     }
 
