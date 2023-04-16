@@ -285,7 +285,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
         if (fight) {
             for (int i = 0; i < Fight.appleList.size() / 2; i++) {
-                Data.packet.paintIcon(this, g, Fight.appleList.get(2 * i), Fight.appleList.get(2 * i + 1));
+                Data.packet0.paintIcon(this, g, Fight.appleList.get(2 * i), Fight.appleList.get(2 * i + 1));
             }
         }
         g.setColor(Color.white);

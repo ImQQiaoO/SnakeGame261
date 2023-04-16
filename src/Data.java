@@ -40,5 +40,8 @@ public class Data {
     //packet
     public static URL packetUrl = Data.class.getResource("/statics/packet.png");
     public static ImageIcon packet = new ImageIcon(packetUrl);
+    //packet0
+    public static URL packet0Url = Data.class.getResource("/statics/packet0.png");
+    public static ImageIcon packet0 = new ImageIcon(packet0Url);
 
 }
