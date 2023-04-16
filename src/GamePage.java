@@ -150,6 +150,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             new Menu();
             gameFrame.dispose();
             requestFocus();
+
         });
         setLayout(null);
     }
@@ -324,12 +325,12 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             direction = "R";
         }
         //双人模式失败判断
-        if (isFail && !gameMode) {
+        if (isFail && !gameMode && !fight) { //双人竞争模式不采用此套提示
             g.setColor(Color.RED);
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
             g.drawString("Player A Dead!", 290, 250);
             winnerPrinter(g);
-        } else if (Snake.isFail && !gameMode) {
+        } else if (Snake.isFail && !gameMode && !fight) {
             g.setColor(new Color(255, 156, 0));
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
             g.drawString("Player B Dead!", 290, 250);
@@ -339,6 +340,20 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setColor(new Color(181, 163, 20));
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 40));
             g.drawString("You win! Press SPACE to restart.", 150, 300);
+        }
+        //双人竞争模式提示
+        if (fight) {
+            Fight.fightCountDown --;
+            //双人竞争模式倒计时条
+            g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 30));
+            g.drawString("Time: ", 200, 90);
+            g.setColor(new Color(229,222,121));
+            g.fillRect(300, 70, 398, 20);
+            g.setColor(new Color(54, 134, 36));
+            if (Fight.fightCountDown < 15) {
+                g.setColor(new Color(187, 45, 45));
+            }
+            g.fillRect(300, 70, (int) (Fight.fightCountDown * 0.62), 20);
         }
         if (gameMode) {
             if (dizzy && dizzyTime != 3) {

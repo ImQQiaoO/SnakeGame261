@@ -1,12 +1,14 @@
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+
 public class Fight {
     static ArrayList<Integer> appleList = new ArrayList<>();
+    static int fightCountDown;
 
     public Fight() {
     }
+
     public static void GPTouchSnake() {
         for (int i = 0; i < 4; i++) {
             if (Objects.equals(GamePage.snakeList.get(0), Snake.snakeList.get(2 * i)) &&
