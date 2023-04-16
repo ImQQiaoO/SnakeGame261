@@ -1,7 +1,9 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Fight {
+    static ArrayList<Integer> appleList = new ArrayList<>();
 
     public Fight() {
     }
@@ -22,13 +24,18 @@ public class Fight {
                     Objects.equals(GamePage.snakeList.get(1), Snake.snakeList.get(2 * i + 1))) {
 //                Snake.length = i + 1;
                 Snake.length = i;
-                System.out.println(Snake.length);
-                Snake.snakeList = new ArrayList<>(Snake.snakeList.subList(0, 2 * Snake.length));
-                System.out.println(Snake.snakeList);
+                ArrayList<Integer> tempList = Snake.snakeList;
+                Snake.snakeList = new ArrayList<>(tempList.subList(0, 2 * Snake.length));
+                appleList.addAll(new ArrayList<>(tempList.subList(2 * (Snake.length + 1), tempList.size())));
+                GamePage.length = GamePage.length + 1;
+                GamePage.snakeList.add(0);
+                GamePage.snakeList.add(0);
+                GamePage.snakeList.set(2 * (GamePage.length - 1), GamePage.snakeList.get(2 * (GamePage.length - 2)));
+                GamePage.snakeList.set(2 * (GamePage.length - 1) + 1, GamePage.snakeList.get(2 * (GamePage.length - 2) + 1));
+                System.out.println(appleList);
                 break;
             }
         }
-
     }
 
     public static void SnakeTouchGP() {
@@ -47,11 +54,18 @@ public class Fight {
                     Objects.equals(Snake.snakeList.get(1), GamePage.snakeList.get(2 * i + 1))) {
 //                GamePage.length = i + 1;
                 GamePage.length = i;
-                System.out.println(GamePage.length);
-                GamePage.snakeList = new ArrayList<>(GamePage.snakeList.subList(0, 2 * GamePage.length));
-                System.out.println(GamePage.snakeList);
+                ArrayList<Integer> tempList = GamePage.snakeList;
+                GamePage.snakeList = new ArrayList<>(tempList.subList(0, 2 * GamePage.length));
+                appleList.addAll(new ArrayList<>(tempList.subList(2 * (GamePage.length + 1), tempList.size())));
+                Snake.length = Snake.length + 1;
+                Snake.snakeList.add(0);
+                Snake.snakeList.add(0);
+                Snake.snakeList.set(2 * (Snake.length - 1), Snake.snakeList.get(2 * (Snake.length - 2)));
+                Snake.snakeList.set(2 * (Snake.length - 1) + 1, Snake.snakeList.get(2 * (Snake.length - 2) + 1));
+                System.out.println(appleList);
                 break;
             }
         }
     }
+
 }

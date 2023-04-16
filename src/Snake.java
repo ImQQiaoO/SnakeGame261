@@ -61,6 +61,20 @@ public class Snake {
             snakeList.set(2 * (length - 1), snakeList.get(2 * (length - 2)));
             snakeList.set(2 * (length - 1) + 1, snakeList.get(2 * (length - 2) + 1));
         }
+        if (GamePage.fight) {
+            for (int i = 0; i < Fight.appleList.size() / 2; i++) {
+                if (Objects.equals(Snake.snakeList.get(0), Fight.appleList.get(2 * i)) &&
+                        Objects.equals(Snake.snakeList.get(1), Fight.appleList.get(2 * i + 1))) {
+                    Fight.appleList.set(2 * i, -100);
+                    Fight.appleList.set(2 * i + 1, -100);
+                    Snake.length++;
+                    snakeList.add(0);
+                    snakeList.add(0);
+                    snakeList.set(2 * (length - 1), snakeList.get(2 * (length - 2)));
+                    snakeList.set(2 * (length - 1) + 1, snakeList.get(2 * (length - 2) + 1));
+                }
+            }
+        }
 
         //吃到金苹果
         for (int i = 0; i < GamePage.goldenFoodX.size(); i++) {

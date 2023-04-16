@@ -282,6 +282,11 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         for (int i = 0; i < poisonFoodX.size(); i++) {  //Draw the poison apple
             Data.poisonApple.paintIcon(this, g, poisonFoodX.get(i), poisonFoodY.get(i));
         }
+        if (fight) {
+            for (int i = 0; i < Fight.appleList.size() / 2; i++) {
+                Data.packet.paintIcon(this, g, Fight.appleList.get(2 * i), Fight.appleList.get(2 * i + 1));
+            }
+        }
         g.setColor(Color.white);
         g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 18));
         if (gameMode) { //单人模式计分信息显示
@@ -292,13 +297,17 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.drawString("Player A", 200, 25);
             g.setColor(Color.white);
             g.drawString("Length " + length, 200, 40);
-            g.drawString("Score " + score, 200, 55);
+            if (!fight) {
+                g.drawString("Score " + score, 200, 55);
+            }
 
             g.setColor(new Color(255, 156, 0));
             g.drawString("Player B", 550, 25);
             g.setColor(Color.white);
             g.drawString("Length " + Snake.length, 550, 40);
-            g.drawString("Score " + anotherSnake.score, 550, 55);
+            if (!fight) {
+                g.drawString("Score " + anotherSnake.score, 550, 55);
+            }
         }
         //游戏提示
         if (!isStart) {
@@ -524,7 +533,20 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 snakeList.set(2 * (length - 1), snakeList.get(2 * (length - 2)));
                 snakeList.set(2 * (length - 1) + 1, snakeList.get(2 * (length - 2) + 1));
             }
-
+            if (fight) {
+                for (int i = 0; i < Fight.appleList.size() / 2; i++) {
+                    if (Objects.equals(GamePage.snakeList.get(0), Fight.appleList.get(2 * i)) &&
+                            Objects.equals(GamePage.snakeList.get(1), Fight.appleList.get(2 * i + 1))) {
+                        Fight.appleList.set(2 * i, -100);
+                        Fight.appleList.set(2 * i + 1, -100);
+                        GamePage.length++;
+                        GamePage.snakeList.add(0);
+                        GamePage.snakeList.add(0);
+                        GamePage.snakeList.set(2 * (GamePage.length - 1), GamePage.snakeList.get(2 * (GamePage.length - 2)));
+                        GamePage.snakeList.set(2 * (GamePage.length - 1) + 1, GamePage.snakeList.get(2 * (GamePage.length - 2) + 1));
+                    }
+                }
+            }
             //吃到金苹果
             for (int i = 0; i < goldenFoodX.size(); i++) {
                 if (Objects.equals(snakeList.get(0), goldenFoodX.get(i)) &&
