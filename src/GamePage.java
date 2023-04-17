@@ -70,7 +70,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             length = 3; //init length = 3
         } else {
             length = 12;
-            Fight.fightCountDown = 45;  //645
+            Fight.fightCountDown = 645;  //645
             Fight.timeUp = false; //初始化时timeUp置为false
         }
         timer.stop();
@@ -351,15 +351,32 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 30));
             g.drawString("Time: ", 200, 90);
             g.setColor(new Color(229, 222, 121));
-            g.fillRect(300, 70, 398, 20);
+            g.fillRect(300, 70, 468, 20);
             g.setColor(new Color(54, 134, 36));
-            if (Fight.fightCountDown < 15) {
+            if (Fight.fightCountDown < 45) {
                 g.setColor(new Color(187, 45, 45));
             }
-            g.fillRect(300, 70, (int) (Fight.fightCountDown * 0.62), 20);
+            g.fillRect(300, 70, (int) (Fight.fightCountDown * 0.73), 20);
             if (Fight.timeUp) {
-                g.setColor(new Color(187, 45, 45));
-                g.drawString("Time Up ", 150, 300);
+                g.setColor(Color.WHITE);
+                g.drawString("Time Up ", 400, 300);
+                if (GamePage.length > Snake.length) {
+                    g.setColor(new Color(231, 1, 4));
+                    g.drawString("Player A Wins! Press SPACE to restart.", 150, 350);
+                } else if (GamePage.length < Snake.length) {
+                    g.setColor(new Color(231, 139, 1));
+                    g.drawString("Player B Wins! Press SPACE to restart.", 150, 350);
+                } else {
+                    g.setColor(Color.WHITE);
+                    g.drawString("Draw! Press SPACE to restart.", 250, 350);
+                }
+            }
+            if (isFail) {
+                g.setColor(new Color(231, 139, 1));
+                g.drawString("Player B Wins! Press SPACE to restart.", 150, 350);
+            } else if (Snake.isFail) {
+                g.setColor(new Color(231, 1, 4));
+                g.drawString("Player A Wins! Press SPACE to restart.", 150, 350);
             }
         }
         if (gameMode) {
