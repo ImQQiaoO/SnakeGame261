@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Fight {
     static ArrayList<Integer> appleList = new ArrayList<>();
     static int fightCountDown;
-
+    static boolean timeUp = false;
     public Fight() {
     }
 

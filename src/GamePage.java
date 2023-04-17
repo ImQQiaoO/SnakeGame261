@@ -71,6 +71,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         } else {
             length = 12;
             Fight.fightCountDown = 645;
+            Fight.timeUp = false; //初始化时timeUp置为false
         }
         timer.stop();
         timer = new Timer(200, this);
@@ -356,6 +357,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 g.setColor(new Color(187, 45, 45));
             }
             g.fillRect(300, 70, (int) (Fight.fightCountDown * 0.62), 20);
+            if (Fight.timeUp) {
+                g.setColor(new Color(187, 45, 45));
+                g.drawString("Time Up ", 150, 300);
+            }
         }
         if (gameMode) {
             if (dizzy && dizzyTime != 3) {
@@ -511,7 +516,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (isStart && !isFail && !isWin && !Snake.isFail) {
+        if (isStart && !isFail && !isWin && !Snake.isFail && !Fight.timeUp) {
 
             speedController(speedUp);
             if (!gameMode) {
@@ -688,6 +693,9 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                 //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
                 Fight.GPTouchSnake();
                 Fight.SnakeTouchGP();
+                if (Fight.fightCountDown == 0) { //倒计时归零
+                    Fight.timeUp = true;
+                }
             }
             repaint(); //需要不断地更新页面实现动画
 //            System.out.println(snakeList);// print out the snakeList
