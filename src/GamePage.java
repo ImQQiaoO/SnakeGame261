@@ -65,10 +65,12 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     public void init() {
         isFail = false;
         isWin = false;
+        direction = "R";
         if (!fight) {
             length = 3; //init length = 3
         } else {
             length = 12;
+            Fight.fightCountDown = 645;
         }
         timer.stop();
         timer = new Timer(200, this);
@@ -343,11 +345,11 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         }
         //双人竞争模式提示
         if (fight) {
-            Fight.fightCountDown --;
+            Fight.fightCountDown--;
             //双人竞争模式倒计时条
             g.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 30));
             g.drawString("Time: ", 200, 90);
-            g.setColor(new Color(229,222,121));
+            g.setColor(new Color(229, 222, 121));
             g.fillRect(300, 70, 398, 20);
             g.setColor(new Color(54, 134, 36));
             if (Fight.fightCountDown < 15) {

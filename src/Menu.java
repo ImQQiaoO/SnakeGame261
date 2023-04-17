@@ -209,9 +209,9 @@ public class Menu extends JPanel implements KeyListener {
     public void modeChooser(boolean gameMode, boolean border, boolean fight) {
         GamePage.border = border;
         GamePage.fight = fight;
-        if (fight) {
-            Fight.fightCountDown = 645;
-        }
+
+
+
         JFrame gameFrame = new JFrame("Snake");
         gameFrame.setBounds(10, 10, 915, 760);
         gameFrame.setResizable(false);
