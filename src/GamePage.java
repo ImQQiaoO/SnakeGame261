@@ -70,7 +70,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             length = 3; //init length = 3
         } else {
             length = 12;
-            Fight.fightCountDown = 645;
+            Fight.fightCountDown = 45;  //645
             Fight.timeUp = false; //初始化时timeUp置为false
         }
         timer.stop();
@@ -474,6 +474,10 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             }
             if (isWin) { //If won, restart the game.
                 isWin = false;
+                init();
+            }
+            if (Fight.timeUp) { //If time is up, restart the game.
+                Fight.timeUp = false;
                 init();
             }
             repaint();
