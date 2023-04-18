@@ -38,6 +38,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     static int heart = 3; //生命值
     static boolean border;  //是否有边界
     static boolean fight; //是否是对战模式
+    static boolean typeAble; //是否可以输入
     boolean isWin = false; //是否胜利;
     JFrame gameFrame;
     boolean dizzy = false; //是否晕眩
@@ -476,6 +477,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+        System.out.println(keyCode);
         if (keyCode == KeyEvent.VK_SPACE) {
             if (isFail || Snake.isFail) {
                 isFail = false;
@@ -501,26 +503,39 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 //            System.out.println(snakeList);// print out the snakeList
         }
         //键盘控制走向
-        if (!dizzy) {
-            if (keyCode == KeyEvent.VK_LEFT && !direction.equals("R")) {
-                direction = "L";
-            } else if (keyCode == KeyEvent.VK_RIGHT && !direction.equals("L")) {
-                direction = "R";
-            } else if (keyCode == KeyEvent.VK_UP && !direction.equals("D")) {
-                direction = "U";
-            } else if (keyCode == KeyEvent.VK_DOWN && !direction.equals("U")) {
-                direction = "D";
+        //The direction of motion of the other snake
+        if (GamePage.typeAble) {
+            if (!dizzy) {
+                if (keyCode == KeyEvent.VK_LEFT && !direction.equals("R")) {
+                    direction = "L";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_RIGHT && !direction.equals("L")) {
+                    direction = "R";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_UP && !direction.equals("D")) {
+                    direction = "U";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_DOWN && !direction.equals("U")) {
+                    direction = "D";
+                    GamePage.typeAble = false;
+                }
+            } else { //dizzy
+                if (keyCode == KeyEvent.VK_LEFT && !direction.equals("L")) {
+                    direction = "R";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_RIGHT && !direction.equals("R")) {
+                    direction = "L";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_UP && !direction.equals("U")) {
+                    direction = "D";
+                    GamePage.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_DOWN && !direction.equals("D")) {
+                    direction = "U";
+                    GamePage.typeAble = false;
+                }
             }
-        } else { //dizzy
-            if (keyCode == KeyEvent.VK_LEFT && !direction.equals("L")) {
-                direction = "R";
-            } else if (keyCode == KeyEvent.VK_RIGHT && !direction.equals("R")) {
-                direction = "L";
-            } else if (keyCode == KeyEvent.VK_UP && !direction.equals("U")) {
-                direction = "D";
-            } else if (keyCode == KeyEvent.VK_DOWN && !direction.equals("D")) {
-                direction = "U";
-            }
+//            System.out.println("GamePage:" + GamePage.typeAble);
+//            System.out.println("Snake:" + direction);
         }
         //The direction of motion of the other snake
         if (!gameMode) {
@@ -539,6 +554,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
         if (isStart && !isFail && !isWin && !Snake.isFail && !Fight.timeUp) {
 
+            GamePage.typeAble = true;
             speedController(speedUp);
             if (!gameMode) {
                 anotherSnake.anotherActionPerformed();

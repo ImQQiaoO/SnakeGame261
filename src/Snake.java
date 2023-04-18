@@ -15,6 +15,7 @@ public class Snake {
     static int dizzyCnt = 0; //晕眩计数器
     static int dizzyTime = 0; //晕眩时间
     static boolean isFail = false;
+    static boolean typeAble;
 
     public void init() {
         snakeList.clear();
@@ -42,6 +43,8 @@ public class Snake {
     }
 
     public void anotherActionPerformed() {
+
+        Snake.typeAble = true;
         snakeAction(length, snakeList, direction);
 
         if (snakeList.get(0) == GamePage.foodX && snakeList.get(1) == GamePage.foodY) {
@@ -168,10 +171,6 @@ public class Snake {
                 break;
             }
         }
-//        if (GamePage.fight) {     TODO: Why there can't!!!
-//            //战斗模式，如果碰到对方的前四节身体，那么自己会掉一点血
-//            Fight.SnakeTouchGP();
-//        }
     }
 
     public static void snakeAction(int length, ArrayList<Integer> snakeList, String direction) {
@@ -241,26 +240,40 @@ public class Snake {
     }
 
     public void secondSnakeDirection(int keyCode) {
-        if (!dizzy) {
-            if (keyCode == KeyEvent.VK_A && !direction.equals("R")) {
-                direction = "L";
-            } else if (keyCode == KeyEvent.VK_D && !direction.equals("L")) {
-                direction = "R";
-            } else if (keyCode == KeyEvent.VK_W && !direction.equals("D")) {
-                direction = "U";
-            } else if (keyCode == KeyEvent.VK_S && !direction.equals("U")) {
-                direction = "D";
+        System.out.println(keyCode);
+        if (Snake.typeAble) {
+            if (!dizzy) {
+                if (keyCode == KeyEvent.VK_A && !direction.equals("R")) {
+                    direction = "L";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_D && !direction.equals("L")) {
+                    direction = "R";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_W && !direction.equals("D")) {
+                    direction = "U";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_S && !direction.equals("U")) {
+                    direction = "D";
+                    Snake.typeAble = false;
+                }
+            } else { //dizzy
+                if (keyCode == KeyEvent.VK_A && !direction.equals("L")) {
+                    direction = "R";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_D && !direction.equals("R")) {
+                    direction = "L";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_W && !direction.equals("U")) {
+                    direction = "D";
+                    Snake.typeAble = false;
+                } else if (keyCode == KeyEvent.VK_S && !direction.equals("D")) {
+                    direction = "U";
+                    Snake.typeAble = false;
+                }
             }
-        } else { //dizzy
-            if (keyCode == KeyEvent.VK_A && !direction.equals("L")) {
-                direction = "R";
-            } else if (keyCode == KeyEvent.VK_D && !direction.equals("R")) {
-                direction = "L";
-            } else if (keyCode == KeyEvent.VK_W && !direction.equals("U")) {
-                direction = "D";
-            } else if (keyCode == KeyEvent.VK_S && !direction.equals("D")) {
-                direction = "U";
-            }
+
+//            System.out.println("Snake:" + Snake.typeAble);
+//            System.out.println("Snake:" + direction);
         }
     }
 }

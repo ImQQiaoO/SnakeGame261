@@ -34,7 +34,7 @@ public class Fight {
                 GamePage.snakeList.add(0);
                 GamePage.snakeList.set(2 * (GamePage.length - 1), GamePage.snakeList.get(2 * (GamePage.length - 2)));
                 GamePage.snakeList.set(2 * (GamePage.length - 1) + 1, GamePage.snakeList.get(2 * (GamePage.length - 2) + 1));
-                System.out.println(appleList);
+//                System.out.println(appleList);
                 break;
             }
         }
@@ -64,7 +64,7 @@ public class Fight {
                 Snake.snakeList.add(0);
                 Snake.snakeList.set(2 * (Snake.length - 1), Snake.snakeList.get(2 * (Snake.length - 2)));
                 Snake.snakeList.set(2 * (Snake.length - 1) + 1, Snake.snakeList.get(2 * (Snake.length - 2) + 1));
-                System.out.println(appleList);
+//                System.out.println(appleList);
                 break;
             }
         }
