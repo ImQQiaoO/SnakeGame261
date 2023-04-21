@@ -51,7 +51,7 @@ while player two needs to control the snake's movement direction through the "W"
 
   7. In Multi Player (Competitive) mode, there will be no apples generated.
 
-  8. Rank List中，你将会看到10个在Single Player (Infinite Mode)模式下取得的最高成绩。
+  8. In the Rank List, you will see the top 10 scores achieved in Single Player (Infinite Mode).
 
 
 
