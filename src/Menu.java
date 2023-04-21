@@ -1,3 +1,4 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+@SuppressWarnings("UnusedDeclaration")
 public class Menu extends JPanel implements KeyListener {
 
     JFrame frame = new JFrame();
@@ -154,12 +156,16 @@ public class Menu extends JPanel implements KeyListener {
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '1') {
             modeChooser(true, true, false); //gameMode:true单人模式  border:true有边界
+            Data.playBGM1();
         } else if (e.getKeyChar() == '2') {
             modeChooser(true, false, false);
+            Data.playBGM1();
         } else if (e.getKeyChar() == '3') {
             modeChooser(false, false, false);
+            Data.playBGM1();
         } else if (e.getKeyChar() == '4') {
             modeChooser(false, false, true);
+            Data.playBGM1();
         } else if (e.getKeyChar() == '5') {  //Show rank List Here:
             class RankList extends JPanel {
                 public RankList() {
