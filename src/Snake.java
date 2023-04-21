@@ -274,8 +274,6 @@ public class Snake {
                 }
             }
 
-//            System.out.println("Snake:" + Snake.typeAble);
-//            System.out.println("Snake:" + direction);
         }
     }
 }

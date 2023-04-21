@@ -198,6 +198,16 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
         super.paintComponent(g);//清屏
         this.setBackground(new Color(40, 97, 81)); //设置面板的背景色
         g.fillRect(25, 100, 850, 600); //绘制游戏区域
+
+        //Drawing lines??? Such a strange requirement, but I have to complete it.
+        g.setColor(new Color(98, 110, 104));
+        for (int i = 0; i < 35; i++) {
+            g.drawLine(25 + i * 25, 100, 25 + i * 25, 700);
+        }
+        for (int i = 1; i < 26; i++) {
+            g.drawLine(25, 75 + 25 * i, 875, 75 + 25 * i);
+        }
+
         //边界:
         if (gameMode && border) { // 1 模式下边界显示
             for (int i = 0; i < 35; i++) {
