@@ -83,6 +83,7 @@ public class Snake {
         for (int i = 0; i < GamePage.goldenFoodX.size(); i++) {
             if (Objects.equals(snakeList.get(0), GamePage.goldenFoodX.get(i)) &&
                     Objects.equals(snakeList.get(1), GamePage.goldenFoodY.get(i))) {
+                Data.playBGM0();
                 int deleteLength = 3;
                 if (length > 6) {
                     length = length - deleteLength;
@@ -103,6 +104,7 @@ public class Snake {
         for (int i = 0; i < GamePage.poisonFoodX.size(); i++) {
             if (Objects.equals(snakeList.get(0), GamePage.poisonFoodX.get(i)) &&
                     Objects.equals(snakeList.get(1), GamePage.poisonFoodY.get(i))) {
+                Data.playBGM0();
                 if (score > 20) {
                     score = score - 20;
                 } else {
@@ -240,7 +242,7 @@ public class Snake {
     }
 
     public void secondSnakeDirection(int keyCode) {
-        System.out.println(keyCode);
+//        System.out.println(keyCode);
         if (Snake.typeAble) {
             if (!dizzy) {
                 if (keyCode == KeyEvent.VK_A && !direction.equals("R")) {

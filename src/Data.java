@@ -1,7 +1,26 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+@SuppressWarnings("all")
 public class Data {
+
+    private static Clip clip0;
+    private static Clip clip1;
+
+    static { //static block, for loading audio file
+        try {
+            clip0 = AudioSystem.getClip();
+            clip1 = AudioSystem.getClip();
+            clip0.open(AudioSystem.getAudioInputStream(Data.class.getResourceAsStream("statics/homage_to_BOTW0.wav")));
+            clip1.open(AudioSystem.getAudioInputStream(Data.class.getResourceAsStream("statics/homage_to_BOTW1.wav")));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //头部图片
     //head
     public static URL headUrl = Data.class.getResource("/statics/head.png");
@@ -43,5 +62,49 @@ public class Data {
     //packet0
     public static URL packet0Url = Data.class.getResource("/statics/packet0.png");
     public static ImageIcon packet0 = new ImageIcon(packet0Url);
+    public static File sound0 = new File("src/statics/homage_to_BOTW0.wav");
+    public static File sound1 = new File("src/statics/homage_to_BOTW1.wav");
+
+    public static void playBGM1() {
+        AudioInputStream audioIn = null;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(Data.sound1);
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        Clip clip;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException ex) {
+            throw new RuntimeException(ex);
+        }
+        try {
+            clip.open(audioIn);
+        } catch (LineUnavailableException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        clip.start();
+    }
+
+    public static void playBGM0() {
+        AudioInputStream audioIn = null;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(Data.sound0);
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        Clip clip;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException ex) {
+            throw new RuntimeException(ex);
+        }
+        try {
+            clip.open(audioIn);
+        } catch (LineUnavailableException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        clip.start();
+    }
 
 }

@@ -477,7 +477,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        System.out.println(keyCode);
+//        System.out.println(keyCode);
         if (keyCode == KeyEvent.VK_SPACE) {
             if (isFail || Snake.isFail) {
                 isFail = false;
@@ -534,8 +534,6 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
                     GamePage.typeAble = false;
                 }
             }
-//            System.out.println("GamePage:" + GamePage.typeAble);
-//            System.out.println("Snake:" + direction);
         }
         //The direction of motion of the other snake
         if (!gameMode) {
@@ -550,6 +548,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
 
     //定时执行的操作
     @Override
+    @SuppressWarnings("Duplicates")
     public void actionPerformed(ActionEvent e) {
 
         if (isStart && !isFail && !isWin && !Snake.isFail && !Fight.timeUp) {
@@ -611,6 +610,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             for (int i = 0; i < goldenFoodX.size(); i++) {
                 if (Objects.equals(snakeList.get(0), goldenFoodX.get(i)) &&
                         Objects.equals(snakeList.get(1), goldenFoodY.get(i))) {
+                    Data.playBGM0();
                     int deleteLength = 3;
                     if (length > 6) {
                         length = length - deleteLength;
@@ -632,6 +632,7 @@ public class GamePage extends JPanel implements KeyListener, ActionListener {
             for (int i = 0; i < poisonFoodX.size(); i++) {
                 if (Objects.equals(snakeList.get(0), poisonFoodX.get(i)) &&
                         Objects.equals(snakeList.get(1), poisonFoodY.get(i))) {
+                    Data.playBGM0();
                     if (score > 20) {
                         score = score - 20;
                     } else {
