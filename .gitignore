@@ -3,5 +3,6 @@
 out
 *.iml
 src/Score.txt
-.classpath
-.project
+*.classpath
+*.project
+*.pptx
