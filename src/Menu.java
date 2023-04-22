@@ -1,4 +1,3 @@
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -129,7 +128,7 @@ public class Menu extends JPanel implements KeyListener {
         drawText(g, 120, 330, "- 3. Multi Player (Peace & Love)", 20);
         drawText(g, 120, 380, "- 4. Multi Player (Competitive)", 20);
         drawText(g, 120, 430, "- 5. Rank List", 20);
-        drawText(g, 120, 480, "- 6. INSTRUCTIONS", 20);
+//        drawText(g, 120, 480, "- 6. INSTRUCTIONS", 20);
         changeColor(g, blue);
         //先读取Score.txt文件，检查Score.txt文件是否为空，如果为空则显示为0，否则显示最高分
         String highestScore;
@@ -207,9 +206,10 @@ public class Menu extends JPanel implements KeyListener {
                 }
             }
             new RankList();
-        } else if (e.getKeyChar() == '6') {
-            System.out.println("Under construction"); //TODO: Add instructions
         }
+//        else if (e.getKeyChar() == '6') {
+//            System.out.println("Under construction"); //TODO: Add instructions
+//        }
     }
 
     public void modeChooser(boolean gameMode, boolean border, boolean fight) {
