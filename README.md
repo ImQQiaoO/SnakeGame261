@@ -28,7 +28,7 @@ while player two needs to control the snake's movement direction through the "W"
 
 5. In Single Player (Quick start), Single Player (Infinite Mode), and Multi Player (Peace & Love), the longer the player's length, the faster the movement speed. However, the movement speed will not always increase. When the player's length reaches a certain value, the player's movement speed will not change.
 
-6. In all modes, there is a chance that a special apple will appear after the player eats an apple.
+6. In all modes, there is a chance that a special apple will appear after the player eats an apple. Special apples will disappear after a period of appearance.
 
    There are two types of special apples:
 
@@ -53,7 +53,7 @@ while player two needs to control the snake's movement direction through the "W"
 
   8. In the Rank List, you will see the top 10 scores achieved in Single Player (Infinite Mode).
 
-
+   ![RankList](./images/RankList.png)
 
 Next, I will introduce these four different modes one by one:
 
